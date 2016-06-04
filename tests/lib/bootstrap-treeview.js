@@ -60,6 +60,8 @@
 		preventUnselect: false,
 
 		// Event handlers
+		onLoading: undefined,
+		onLoadingFailed: undefined,
 		onInitialized: undefined,
 		onNodeRendered: undefined,
 		onRendered: undefined,
@@ -242,6 +244,8 @@
 	};
 
 	Tree.prototype._unsubscribeEvents = function () {
+		this.$element.off('loading');
+		this.$element.off('loadingFailed');
 		this.$element.off('initialized');
 		this.$element.off('nodeRendered');
 		this.$element.off('rendered');
@@ -261,6 +265,14 @@
 
 	Tree.prototype._subscribeEvents = function () {
 		this._unsubscribeEvents();
+
+		if (typeof (this._options.onLoading) === 'function') {
+			this.$element.on('loading', this._options.onLoading);
+		}
+
+		if (typeof (this._options.onLoadingFailed) === 'function') {
+			this.$element.on('loadingFailed', this._options.onLoadingFailed);
+		}
 
 		if (typeof (this._options.onInitialized) === 'function') {
 			this.$element.on('initialized', this._options.onInitialized);
