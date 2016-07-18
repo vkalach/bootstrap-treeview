@@ -140,7 +140,8 @@ If you want to do more, here's the full node specification
     target: '#tree'
   }
   id: 'something',
-  class: 'special extraordinary'
+  class: 'special extraordinary',
+  hideCheckbox: true,
   nodes: [
     {},
     ...
@@ -230,6 +231,10 @@ List of custom CSS classes to append, separated by space.
 
 Custom HTML id attribute.
 
+#### hideCheckbox
+`Boolean` `Default: false`
+
+Used to hide the checkbox of the given node when [showCheckbox](#showcheckbox) is set to `true`.
 
 ### Extendible
 
