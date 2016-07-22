@@ -54,6 +54,7 @@
 		highlightSearchResults: true,
 		showBorder: true,
 		showIcon: true,
+		showImage: false,
 		showCheckbox: false,
 		checkboxFirst: false,
 		showTags: false,
@@ -805,8 +806,10 @@
 		if (this._options.checkboxFirst) {
 			this._addCheckbox(node);
 			this._addIcon(node);
+			this._addImage(node);
 		} else {
 			this._addIcon(node);
+			this._addImage(node);
 			this._addCheckbox(node);
 		}
 
@@ -847,7 +850,7 @@
 
 	// Add node icon
 	Tree.prototype._addIcon = function (node) {
-		if (this._options.showIcon) {
+		if (this._options.showIcon && !(this._options.showImage && node.image)) {
 			node.$el
 				.append($(this._template.icon)
 					.addClass('node-icon')
@@ -855,6 +858,16 @@
 				);
 		}
 	}
+
+	Tree.prototype._addImage = function (node) {
+ 		if (this._options.showImage && node.image) {
+ 			node.$el
+ 				.append($(this._template.image)
+ 					.addClass('node-image')
+ 					.css('background-image', "url('" + node.image + "')")
+ 				);
+ 		}
+ 	}
 
 	// Creates a new node element from template and
 	// ensures the template is inserted at the correct position
@@ -984,7 +997,8 @@
 		node: '<li class="list-group-item"></li>',
 		indent: '<span class="indent"></span>',
 		icon: '<span class="icon"></span>',
-		badge: '<span class="badge"></span>'
+		badge: '<span class="badge"></span>',
+		image: '<span class="image"></span>'
 	};
 
 	Tree.prototype._css = '.treeview .list-group-item{cursor:pointer}.treeview span.indent{margin-left:10px;margin-right:10px}.treeview span.icon{width:12px;margin-right:5px}.treeview .node-disabled{color:silver;cursor:not-allowed}'
