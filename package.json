@@ -1,17 +1,17 @@
 {
-  "name": "bootstrap-treeview",
+  "name": "patternfly-bootstrap-treeview",
   "description": "Tree View for Twitter Bootstrap",
-  "version": "1.2.0",
-  "homepage": "https://github.com/jonmiles/bootstrap-treeview",
+  "version": "1.0.0",
+  "homepage": "https://github.com/patternfly/patternfly-bootstrap-treeview",
   "author": {
-    "name": "Jonathan Miles"
+    "name": "Red Hat"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jonmiles/bootstrap-treeview.git"
+    "url": "git://github.com/patternfly/patternfly-bootstrap-treeview.git"
   },
   "bugs": {
-    "url": "https://github.com/jonmiles/bootstrap-treeview/issues"
+    "url": "https://github.com/patternfly/patternfly-bootstrap-treeview/issues"
   },
   "licenses": [
     {
