@@ -46,6 +46,7 @@
 		color: undefined,
 		backColor: undefined,
 		borderColor: undefined,
+		changedNodeColor: '#39A5DC',
 		onhoverColor: '#F5F5F5',
 		selectedColor: '#FFFFFF',
 		selectedBackColor: '#428bca',
@@ -59,6 +60,7 @@
 		showImage: false,
 		showCheckbox: false,
 		checkboxFirst: false,
+		highlightChanges: false,
 		showTags: false,
 		multiSelect: false,
 		preventUnselect: false,
@@ -159,6 +161,7 @@
 			uncheckAll: $.proxy(this.uncheckAll, this),
 			uncheckNode: $.proxy(this.uncheckNode, this),
 			toggleNodeChecked: $.proxy(this.toggleNodeChecked, this),
+			unmarkCheckboxChanges: $.proxy(this.unmarkCheckboxChanges, this),
 
 			// Disable / enable methods
 			disableAll: $.proxy(this.disableAll, this),
@@ -354,6 +357,7 @@
 		return $.when.apply(this, this._setInitialState(node, level))
 			.done($.proxy(function () {
 				this._orderedNodes = this._sortNodes();
+				this._inheritCheckboxChanges();
 				this._triggerEvent('initialized', this._orderedNodes, _default.options);
 				return;
 			}, this));
@@ -663,6 +667,14 @@
 		return this;
 	};
 
+	Tree.prototype._inheritCheckboxChanges = function () {
+		if (this._options.showCheckbox && this._options.highlightChanges) {
+			this._checkedNodes = $.grep(this._orderedNodes, function (node) {
+				return node.state.checked;
+			});
+		}
+	};
+
 	Tree.prototype._toggleChecked = function (node, options) {
 		if (!node) return;
 
@@ -714,6 +726,11 @@
 		// We never pass options when rendering, so the only time
 		// we need to validate state is from user interaction
 		if (options && state === node.state.checked) return;
+
+		// Highlight the node if its checkbox has unsaved changes
+		if (this._options.highlightChanges) {
+			node.$el.toggleClass('node-check-changed', (this._checkedNodes.indexOf(node) == -1) == state);
+		}
 
 		if (state) {
 
@@ -1063,6 +1080,12 @@
 
 			style += '.node-' + this._elementId + '.node-selected{' + innerStyle + '}';
 			style += '.node-' + this._elementId + '.node-selected:hover{' + innerStyle + '}';
+		}
+
+		// Style changed nodes
+		if (this._options.highlightChanges) {
+			var innerStyle = 'color: ' + this._options.changedNodeColor + ';';
+			style += '.node-' + this._elementId + '.node-check-changed{' + innerStyle + '}';
 		}
 
 		// Node level style overrides
@@ -1612,6 +1635,16 @@
 		}, this));
 	};
 
+	/**
+		Saves the current state of checkboxes as default, cleaning up any highlighted changes
+	*/
+	Tree.prototype.unmarkCheckboxChanges = function () {
+		this._inheritCheckboxChanges();
+
+		$.each(this._nodes, function (index, node) {
+			node.$el.removeClass('node-check-changed');
+		});
+	};
 
 	/**
 		Disable all tree nodes

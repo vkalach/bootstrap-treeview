@@ -309,6 +309,11 @@ String, [any legal color value](http://www.w3schools.com/cssref/css_colors_legal
 
 Sets the border color for the component; set showBorder to false if you don't want a visible border.
 
+#### changedNodeColor
+String, [any legal color value](http://www.w3schools.com/cssref/css_colors_legal.asp).  Default: blue
+
+Sets the text color for a node with a changed checkbox.
+
 #### checkboxFirst
 Boolean. Default: false
 
@@ -353,6 +358,10 @@ Whether or not to enable hierarchical checking/unchecking of checkboxes.
 Boolean.  Default: false
 
 Whether or not to propagate nodeChecked and nodeUnchecked events to the parent/child nodes, used in conjunction with hierarchicalCheck.
+
+#### highlightChanges
+Boolean.  Default: false
+Highlights the nodes with changed checkbox state, used in conjunction with showCheckbox.
 
 #### highlightSearchResults
 Boolean.  Default: true
@@ -454,8 +463,6 @@ Whether or not to display tags to the right of each node.  The values of which m
 String, class names(s).  Default: "glyphicon glyphicon-unchecked" as defined by [Bootstrap Glyphicons](http://getbootstrap.com/components/#glyphicons)
 
 Sets the icon to be as an unchecked checkbox, used in conjunction with showCheckbox.
-
-
 
 ## Methods
 
@@ -870,6 +877,11 @@ $('#tree').treeview('updateNode', [ node, newNode, { silent: true } ]);
 ```
 
 Triggers `nodeRendered` event; pass silent to suppress events.
+
+#### unmarkCheckboxChanges()
+
+Marks all checkboxes as unchanged, removing the highlighted class from each of them.
+
 
 #### unselectNode(nodes, options)
 
