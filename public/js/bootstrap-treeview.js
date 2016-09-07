@@ -76,12 +76,6 @@
 		onRendered: undefined,
 		onDestroyed: undefined,
 
-		// onNodeHover: undefined,
-		// onNodeClicked: undefined,
-		// onNodeDblClicked: undefined,
-		// onNodeContextMenuClicked: undefined,
-		// onNodeTagClicked: undefined,
-
 		onNodeChecked: undefined,
 		onNodeCollapsed: undefined,
 		onNodeDisabled: undefined,
@@ -410,6 +404,11 @@
 			// set checked state; unless set always false
 			if (!node.state.hasOwnProperty('checked')) {
 				node.state.checked = false;
+			}
+
+			// convert the undefined string if hierarchical checks are enabled
+			if (this._options.hierarchicalCheck && node.state.checked === 'undefined') {
+				node.state.checked = undefined;
 			}
 
 			// set enabled state; unless set always false

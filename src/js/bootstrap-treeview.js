@@ -406,6 +406,11 @@
 				node.state.checked = false;
 			}
 
+			// convert the undefined string if hierarchical checks are enabled
+			if (this._options.hierarchicalCheck && node.state.checked === 'undefined') {
+				node.state.checked = undefined;
+			}
+
 			// set enabled state; unless set always false
 			if (!node.state.hasOwnProperty('disabled')) {
 				node.state.disabled = false;
