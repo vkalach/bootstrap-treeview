@@ -856,7 +856,7 @@
 		if (!this._initialized) {
 
 			// Setup first time only components
-			this.$wrapper = $(this._template.tree);
+			this.$wrapper = this._template.tree.clone();
 			this.$element.empty()
 				.addClass(pluginName)
 				.append(this.$wrapper);
@@ -911,12 +911,12 @@
 
 		// Add indent/spacer to mimic tree structure
 		for (var i = 0; i < (node.level - 1); i++) {
-			node.$el.append(this._template.indent);
+			node.$el.append(this._template.indent.clone());
 		}
 
 		// Add expand / collapse or empty spacer icons
 		node.$el
-			.append($(this._template.icon)
+			.append(this._template.icon.clone()
 				.addClass(node.nodes || node.lazyLoad ? 'expand-icon' : this._options.emptyIcon)
 			);
 
@@ -929,11 +929,12 @@
 			this._addIcon(node);
 			this._addImage(node);
 			this._addCheckbox(node);
+
 		}
 
 		// Add text
 		if (this._options.wrapNodeText) {
-			var wrapper = $((this._template.text));
+			var wrapper = this._template.text.clone();
 			node.$el.append(wrapper);
 			wrapper.append(node.text);
 		} else {
@@ -944,7 +945,7 @@
 		if (this._options.showTags && node.tags) {
 			$.each(node.tags, $.proxy(function addTag(id, tag) {
 				node.$el
-					.append($(this._template.badge)
+					.append(this._template.badge.clone()
 						.append(tag)
 					);
 			}, this));
@@ -966,7 +967,7 @@
 	Tree.prototype._addCheckbox = function (node) {
 		if (this._options.showCheckbox && (node.hideCheckbox === undefined || node.hideCheckbox === false)) {
 			node.$el
-				.append($(this._template.icon)
+				.append(this._template.icon.clone()
 					.addClass('check-icon')
 				);
 		}
@@ -976,7 +977,7 @@
 	Tree.prototype._addIcon = function (node) {
 		if (this._options.showIcon && !(this._options.showImage && node.image)) {
 			node.$el
-				.append($(this._template.icon)
+				.append(this._template.icon.clone()
 					.addClass('node-icon')
 					.addClass(node.icon || this._options.nodeIcon)
 				);
@@ -986,7 +987,7 @@
 	Tree.prototype._addImage = function (node) {
  		if (this._options.showImage && node.image) {
  			node.$el
- 				.append($(this._template.image)
+ 				.append(this._template.image.clone()
  					.addClass('node-image')
  					.css('background-image', "url('" + node.image + "')")
  				);
@@ -996,7 +997,7 @@
 	// Creates a new node element from template and
 	// ensures the template is inserted at the correct position
 	Tree.prototype._newNodeEl = function (node, previousNode) {
-		var $el = $(this._template.node);
+		var $el = this._template.node.clone();
 
 		if (previousNode) {
 			// typical usage, as nodes are rendered in
@@ -1123,13 +1124,13 @@
 	};
 
 	Tree.prototype._template = {
-		tree: '<ul class="list-group"></ul>',
-		node: '<li class="list-group-item"></li>',
-		indent: '<span class="indent"></span>',
-		icon: '<span class="icon"></span>',
-		badge: '<span class="badge"></span>',
-		image: '<span class="image"></span>',
-		text: '<span class="text"></span>'
+		tree: $('<ul class="list-group"></ul>'),
+		node: $('<li class="list-group-item"></li>'),
+		indent: $('<span class="indent"></span>'),
+		icon: $('<span class="icon"></span>'),
+		image: $('<span class="image"></span>'),
+		badge: $('<span class="badge"></span>'),
+		text: $('<span class="text"></span>')
 	};
 
 	Tree.prototype._css = '.treeview .list-group-item{cursor:pointer}.treeview span.indent{margin-left:10px;margin-right:10px}.treeview span.icon{width:12px;margin-right:5px}.treeview .node-disabled{color:silver;cursor:not-allowed}'
