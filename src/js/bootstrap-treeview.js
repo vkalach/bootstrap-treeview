@@ -183,6 +183,9 @@
 
 		this._options = $.extend({}, _default.settings, options);
 
+		// Cache empty icon DOM template
+		this._template.icon.empty.addClass(this._options.emptyIcon);
+
 		this._destroy();
 		this._subscribeEvents();
 
@@ -916,8 +919,8 @@
 
 		// Add expand / collapse or empty spacer icons
 		node.$el
-			.append(this._template.icon.clone()
-				.addClass(node.nodes || node.lazyLoad ? 'expand-icon' : this._options.emptyIcon)
+			.append(
+				node.nodes || node.lazyLoad ? this._template.icon.expand.clone() : this._template.icon.empty.clone()
 			);
 
 		// Add checkbox and node icons
@@ -929,7 +932,6 @@
 			this._addIcon(node);
 			this._addImage(node);
 			this._addCheckbox(node);
-
 		}
 
 		// Add text
@@ -967,9 +969,7 @@
 	Tree.prototype._addCheckbox = function (node) {
 		if (this._options.showCheckbox && (node.hideCheckbox === undefined || node.hideCheckbox === false)) {
 			node.$el
-				.append(this._template.icon.clone()
-					.addClass('check-icon')
-				);
+				.append(this._template.icon.check.clone());
 		}
 	}
 
@@ -977,8 +977,7 @@
 	Tree.prototype._addIcon = function (node) {
 		if (this._options.showIcon && !(this._options.showImage && node.image)) {
 			node.$el
-				.append(this._template.icon.clone()
-					.addClass('node-icon')
+				.append(this._template.icon.node.clone()
 					.addClass(node.icon || this._options.nodeIcon)
 				);
 		}
@@ -1125,7 +1124,12 @@
 		tree: $('<ul class="list-group"></ul>'),
 		node: $('<li class="list-group-item"></li>'),
 		indent: $('<span class="indent"></span>'),
-		icon: $('<span class="icon"></span>'),
+		icon: {
+			node: $('<span class="icon node-icon"></span>'),
+			expand: $('<span class="icon expand-icon"></span>'),
+			check: $('<span class="icon check-icon"></span>'),
+			empty: $('<span class="icon"></span>')
+		},
 		image: $('<span class="image"></span>'),
 		badge: $('<span class="badge"></span>'),
 		text: $('<span class="text"></span>')
