@@ -524,19 +524,23 @@
 
 		// Lazy-load the child nodes if possible
 		if (typeof(this._options.lazyLoad) === 'function' && node.lazyLoad) {
-			// Show a different icon while loading the child nodes
-			node.$el.children('span.expand-icon')
-				.removeClass(this._options.expandIcon)
-				.addClass(this._options.loadingIcon);
-
-			var _this = this;
-			this._options.lazyLoad(node, function (nodes) {
-				// Adding the node will expand its parent automatically
-				_this.addNode(nodes, node);
-			});
+			this._lazyLoad(node);
 		} else {
 			this._setExpanded(node, !node.state.expanded, options);
 		}
+	};
+
+	Tree.prototype._lazyLoad = function (node) {
+		// Show a different icon while loading the child nodes
+		node.$el.children('span.expand-icon')
+			.removeClass(this._options.expandIcon)
+			.addClass(this._options.loadingIcon);
+
+		var _this = this;
+		this._options.lazyLoad(node, function (nodes) {
+			// Adding the node will expand its parent automatically
+			_this.addNode(nodes, node);
+		});
 		// Only the first expand should do a lazy-load
 		delete node.lazyLoad;
 	};
@@ -1528,6 +1532,11 @@
 		$.each(nodes, $.proxy(function (index, node) {
 			// Do not re-expand already expanded nodes
 			if (node.state.expanded) return;
+
+			if (typeof(this._options.lazyLoad) === 'function' && node.lazyLoad) {
+				this._lazyLoad(node);
+			}
+
 			this._setExpanded(node, true, options);
 			if (node.nodes) {
 				this._expandLevels(node.nodes, options.levels-1, options);
