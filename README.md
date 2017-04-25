@@ -238,6 +238,11 @@ Whether or not a node is selected.
 
 Used in conjunction with global showTags option to add additional information to the right of each node; using [Bootstrap Badges](http://getbootstrap.com/components/#badges)
 
+#### tagsClass
+`Array of Strings`  `Optional`
+
+Used in conjunction with tags option to set class of node tags. The class are defined in the same order of tags. You can set null to use the default value. If class array is smaller than tags array the default value is used.
+
 #### dataAttr
 `Array of Objects`  `Optional`
 
@@ -469,6 +474,11 @@ Boolean.  Default: false
 
 Whether or not to display tags to the right of each node.  The values of which must be provided in the data structure on a per node basis.
 
+#### tagsClass
+String, class names(s).  Default: "badge"
+
+Sets the class of tags
+
 #### uncheckedIcon
 String, class names(s).  Default: "glyphicon glyphicon-unchecked" as defined by [Bootstrap Glyphicons](http://getbootstrap.com/components/#glyphicons)
 
@@ -679,7 +689,7 @@ Triggers `nodeExpanded` event; pass silent to suppress events.
 Returns an array of matching node objects.
 
 ```javascript
-$('#tree').treeview('findNode', ['Parent', 'text']);
+$('#tree').treeview('findNodes', ['Parent', 'text']);
 ```
 
 > Use regular expressions for pattern matching NOT string equals, if you need to match an exact string use start and end string anchors e.g. ^pattern$.
