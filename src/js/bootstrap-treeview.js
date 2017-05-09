@@ -972,7 +972,9 @@
 				node.$el
 					.append(this._template.badge.clone()
 						.addClass(
-							typeof node.tagsClass[id] === 'string' ?
+							typeof node.tagsClass === 'object'
+							&& id in node.tagsClass
+							&& typeof node.tagsClass[id] === 'string' ?
 								node.tagsClass[id] :
 								this._options.tagsClass
 						)
