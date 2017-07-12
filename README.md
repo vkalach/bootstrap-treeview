@@ -129,6 +129,7 @@ If you want to do more, here's the full node specification
   selectedIcon: "glyphicon glyphicon-stop",
   color: "#000000",
   backColor: "#FFFFFF",
+  iconColor: "#FFFFFF",
   selectable: true,
   checkable: true,
   state: {
@@ -196,6 +197,11 @@ The foreground color used on a given node, overrides global color option.
 `String` `Optional`
 
 The background color used on a given node, overrides global color option.
+
+#### iconColor
+`String` `Optional`
+
+The color used on a given node's icon.
 
 #### lazyLoad
 `Boolean` `Default: false`
