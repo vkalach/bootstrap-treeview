@@ -1179,8 +1179,8 @@
 		@param {String} pattern - A pattern to match against a given field
 		@return {String} field - Field to query pattern against
 	*/
-	Tree.prototype.findNodes = function (pattern, field) {
-		return this._findNodes(pattern, field);
+	Tree.prototype.findNodes = function (pattern, field, modifier) {
+		return this._findNodes(pattern, field, modifier);
 	};
 
 
