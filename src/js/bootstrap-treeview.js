@@ -639,7 +639,7 @@
 		return this;
 	};
 
-	Tree.prototype._setSelected = function (node, state, options, fired = false) {
+	Tree.prototype._setSelected = function (node, state, options, fired) {
 
 		// We never pass options when rendering, so the only time
 		// we need to validate state is from user interaction
@@ -704,7 +704,7 @@
 			this._triggerEvent('nodeUnselected', node, options);
 			if (!fired) {
 				this._triggerEvent('nodeChanged', node, options);
-			}			
+			}
 		}
 
 		return this;
