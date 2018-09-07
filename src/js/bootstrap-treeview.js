@@ -1018,10 +1018,12 @@
 	// Add node icon
 	Tree.prototype._addIcon = function (node) {
 		if (this._options.showIcon && !(this._options.showImage && node.image)) {
-			node.$el
-				.append(this._template.icon.node.clone()
-					.addClass(node.icon || this._options.nodeIcon)
-				);
+			var icon = this._template.icon.node.clone().addClass(node.icon || this._options.nodeIcon);
+			if (node.iconBackground) {
+				icon.addClass('node-icon-background');
+			}
+
+			node.$el.append(icon);
 		}
 	}
 
@@ -1160,6 +1162,11 @@
 
 			if (node.iconColor) {
 				var innerStyle = 'color:' + node.iconColor + ';';
+				style += '.node-' + this._elementId + '[data-nodeId="' + node.nodeId + '"] .node-icon{' + innerStyle + '}';
+			}
+
+			if (node.iconBackground) {
+				var innerStyle = 'background:' + node.iconBackground + ';';
 				style += '.node-' + this._elementId + '[data-nodeId="' + node.nodeId + '"] .node-icon{' + innerStyle + '}';
 			}
 		}, this));
