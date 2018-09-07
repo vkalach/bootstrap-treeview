@@ -130,6 +130,7 @@ If you want to do more, here's the full node specification
   color: "#000000",
   backColor: "#FFFFFF",
   iconColor: "#FFFFFF",
+  iconBackground: "#000000",
   selectable: true,
   checkable: true,
   state: {
@@ -202,6 +203,11 @@ The background color used on a given node, overrides global color option.
 `String` `Optional`
 
 The color used on a given node's icon.
+
+#### iconBackground
+`String` `Optional`
+
+The color used under a given node's background icon.
 
 #### lazyLoad
 `Boolean` `Default: false`
