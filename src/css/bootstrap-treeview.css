@@ -55,4 +55,6 @@
 .treeview span.icon.node-icon-background {
   padding: 2px 2px 2px 2px;
   width: calc(1em + 4px);
+  height: calc(1em + 4px);
+  line-height: 1em;
 }
