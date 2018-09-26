@@ -1019,8 +1019,12 @@
 	Tree.prototype._addIcon = function (node) {
 		if (this._options.showIcon && !(this._options.showImage && node.image)) {
 			var icon = this._template.icon.node.clone().addClass(node.icon || this._options.nodeIcon);
+			if (node.iconColor) {
+				icon.css('color', node.iconColor);
+			}
 			if (node.iconBackground) {
 				icon.addClass('node-icon-background');
+				icon.css('background', node.iconBackground);
 			}
 
 			node.$el.append(icon);
@@ -1158,16 +1162,6 @@
 					innerStyle += 'background-color:' + node.backColor + ';';
 				}
 				style += '.node-' + this._elementId + '[data-nodeId="' + node.nodeId + '"]{' + innerStyle + '}';
-			}
-
-			if (node.iconColor) {
-				var innerStyle = 'color:' + node.iconColor + ';';
-				style += '.node-' + this._elementId + '[data-nodeId="' + node.nodeId + '"] .node-icon{' + innerStyle + '}';
-			}
-
-			if (node.iconBackground) {
-				var innerStyle = 'background:' + node.iconBackground + ';';
-				style += '.node-' + this._elementId + '[data-nodeId="' + node.nodeId + '"] .node-icon{' + innerStyle + '}';
 			}
 		}, this));
 
